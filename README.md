@@ -80,13 +80,18 @@ bug-report-normalizer/
 │     ├─ __init__.py
 │     ├─ __main__.py
 │     ├─ cli.py
-│     └─ models.py
+│     ├─ exceptions.py
+│     ├─ llm_client.py
+│     ├─ models.py
+│     └─ prompts.py
 ├─ tests/
 │  ├─ unit/
 │  ├─ contract/
 │  ├─ integration/
-│  └─ fixtures/
+│  ├─ fixtures/
+│  └─ fakes.py
 ├─ docs/
+├─ .env.example
 ├─ README.md
 ├─ pyproject.toml
 └─ .gitignore
@@ -99,13 +104,17 @@ Current implemented layers:
 - data contract with Pydantic models
 - model validation tests
 - initial contract tests
+- prompt builder
+- Ollama client
+- fake client for testing higher layers later
 
 Next planned step:
 
-- prompt builder
-- LLM client interface
-- Ollama client skeleton
-- fake client for tests
+- application service
+- JSON parsing
+- validation of model output
+- controlled failure paths
+- service tests using the fake client
 
 ## Local setup
 
