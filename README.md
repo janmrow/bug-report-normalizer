@@ -83,7 +83,8 @@ bug-report-normalizer/
 │     ├─ exceptions.py
 │     ├─ llm_client.py
 │     ├─ models.py
-│     └─ prompts.py
+│     ├─ prompts.py
+│     └─ service.py
 ├─ tests/
 │  ├─ unit/
 │  ├─ contract/
@@ -106,41 +107,13 @@ Current implemented layers:
 - initial contract tests
 - prompt builder
 - Ollama client
-- fake client for testing higher layers later
+- fake client for testing higher layers
+- application service that parses and validates LLM output
 
 Next planned step:
 
-- application service
-- JSON parsing
-- validation of model output
-- controlled failure paths
-- service tests using the fake client
-
-## Local setup
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -e ".[dev]"
-```
-
-## Run checks
-
-```bash
-pytest
-ruff check .
-ruff format --check .
-```
-
-## Run the CLI
-
-```bash
-bug-report-normalizer
-```
-
-or
-
-```bash
-python -m bug_report_normalizer
-```
+- CLI input handling
+- JSON rendering
+- reading from argument, file, or stdin
+- user-facing error handling
+- CLI tests
