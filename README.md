@@ -79,7 +79,8 @@ bug-report-normalizer/
 │  └─ bug_report_normalizer/
 │     ├─ __init__.py
 │     ├─ __main__.py
-│     └─ cli.py
+│     ├─ cli.py
+│     └─ models.py
 ├─ tests/
 │  ├─ unit/
 │  ├─ contract/
@@ -91,8 +92,20 @@ bug-report-normalizer/
 └─ .gitignore
 ```
 
-This first commit only bootstraps the repository.
-The domain models, prompts, LLM client, service layer, and real CLI flow will be added in later commits.
+Current implemented layers:
+
+- package bootstrap
+- CLI skeleton
+- data contract with Pydantic models
+- model validation tests
+- initial contract tests
+
+Next planned step:
+
+- prompt builder
+- LLM client interface
+- Ollama client skeleton
+- fake client for tests
 
 ## Local setup
 
@@ -122,13 +135,3 @@ or
 ```bash
 python -m bug_report_normalizer
 ```
-
-## Current status
-
-Current phase: bootstrap repo
-
-Next planned step:
-
-- define the output contract with Pydantic models
-- add model validation tests
-- establish the first real domain boundary
