@@ -59,7 +59,7 @@ class OllamaClient:
         *,
         model: str,
         base_url: str = "http://localhost:11434",
-        timeout_seconds: float = 30.0,
+        timeout_seconds: float = 120.0,
     ) -> None:
         if not model.strip():
             raise ValueError("model must not be empty.")

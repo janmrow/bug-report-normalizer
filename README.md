@@ -84,6 +84,7 @@ bug-report-normalizer/
 │     ├─ llm_client.py
 │     ├─ models.py
 │     ├─ prompts.py
+│     ├─ renderer.py
 │     └─ service.py
 ├─ tests/
 │  ├─ unit/
@@ -101,19 +102,83 @@ bug-report-normalizer/
 Current implemented layers:
 
 - package bootstrap
-- CLI skeleton
+- CLI entrypoint
 - data contract with Pydantic models
-- model validation tests
-- initial contract tests
 - prompt builder
 - Ollama client
-- fake client for testing higher layers
-- application service that parses and validates LLM output
+- application service
+- JSON and text rendering
+- CLI input handling from argument, file, or stdin
+- unit and contract tests for the deterministic layers
 
 Next planned step:
 
-- CLI input handling
-- JSON rendering
-- reading from argument, file, or stdin
-- user-facing error handling
-- CLI tests
+- small regression dataset
+- contract and smoke integration tests
+- architecture notes in `docs/decisions.md`
+- README polish for portfolio presentation
+
+## Local setup
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -e ".[dev]"
+```
+
+## Configuration
+
+You can configure the model and Ollama base URL with environment variables:
+
+```bash
+export OLLAMA_MODEL=llama3.2
+export OLLAMA_BASE_URL=http://localhost:11434
+```
+
+## Run checks
+
+```bash
+pytest
+ruff check .
+ruff format --check .
+```
+
+## CLI usage
+
+Pass the raw note directly:
+
+```bash
+bug-report-normalizer \
+  --model "$OLLAMA_MODEL" \
+  --note "Checkout is broken. Spinner stays forever after clicking Pay now on Safari on iPhone."
+```
+
+Read the note from a file:
+
+```bash
+bug-report-normalizer \
+  --model "$OLLAMA_MODEL" \
+  --input-file ./examples/checkout-note.txt
+```
+
+Pipe the note through stdin:
+
+```bash
+cat ./examples/checkout-note.txt | bug-report-normalizer --model "$OLLAMA_MODEL"
+```
+
+Render human-readable text instead of JSON:
+
+```bash
+bug-report-normalizer \
+  --model "$OLLAMA_MODEL" \
+  --output-format text \
+  --note "Search page looks broken. Empty results for known products on Chrome."
+```
+
+You can also run the package directly:
+
+```bash
+python -m bug_report_normalizer --model "$OLLAMA_MODEL" --note "Login button does nothing."
+```
