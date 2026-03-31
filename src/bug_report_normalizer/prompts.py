@@ -13,6 +13,7 @@ Rules:
 - Do not guess environment details, versions, or reproduction steps.
 - When important information is missing, leave the relevant field empty or null
   and include the gap in missing_information.
+- Fields marked as required (like 'title' and 'summary') MUST NOT be empty strings.
 - Return only valid JSON that matches the requested schema.
 """
 

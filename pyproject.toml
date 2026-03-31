@@ -31,8 +31,11 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.pytest.ini_options]
+pythonpath = ["."]
 testpaths = ["tests"]
-pythonpath = ["src", "."]
+markers = [
+  "integration: tests that call a real Ollama instance",
+]
 
 [tool.ruff]
 line-length = 100

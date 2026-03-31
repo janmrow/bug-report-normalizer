@@ -71,7 +71,7 @@ This project is meant to show:
 - thoughtful testing of a system with a nondeterministic component,
 - clean, small-scope engineering.
 
-## Planned architecture
+## Architecture
 
 ```text
 bug-report-normalizer/
@@ -93,30 +93,24 @@ bug-report-normalizer/
 │  ├─ fixtures/
 │  └─ fakes.py
 ├─ docs/
+│  └─ decisions.md
 ├─ .env.example
 ├─ README.md
 ├─ pyproject.toml
 └─ .gitignore
 ```
 
-Current implemented layers:
+## Design choices
 
-- package bootstrap
-- CLI entrypoint
-- data contract with Pydantic models
-- prompt builder
-- Ollama client
-- application service
-- JSON and text rendering
-- CLI input handling from argument, file, or stdin
-- unit and contract tests for the deterministic layers
+The project is intentionally shaped around a few decisions:
 
-Next planned step:
+- CLI first instead of a web UI
+- contract first instead of prompt first
+- one provider in MVP
+- structured JSON instead of free-form prose
+- strong deterministic tests and only a few real-model smoke tests
 
-- small regression dataset
-- contract and smoke integration tests
-- architecture notes in `docs/decisions.md`
-- README polish for portfolio presentation
+See `docs/decisions.md` for the short rationale behind those choices.
 
 ## Local setup
 
@@ -129,19 +123,16 @@ pip install -e ".[dev]"
 
 ## Configuration
 
-You can configure the model and Ollama base URL with environment variables:
+Set the model name:
 
 ```bash
 export OLLAMA_MODEL=llama3.2
-export OLLAMA_BASE_URL=http://localhost:11434
 ```
 
-## Run checks
+Optionally set the base URL:
 
 ```bash
-pytest
-ruff check .
-ruff format --check .
+export OLLAMA_BASE_URL=http://localhost:11434
 ```
 
 ## CLI usage
@@ -182,3 +173,68 @@ You can also run the package directly:
 ```bash
 python -m bug_report_normalizer --model "$OLLAMA_MODEL" --note "Login button does nothing."
 ```
+
+## Test strategy
+
+### Unit tests
+
+These cover deterministic layers:
+
+- models
+- prompt builder
+- renderer
+- service with fake client
+- CLI behavior
+
+### Contract tests
+
+These check:
+
+- output shape,
+- collection defaults,
+- representative regression cases from a small dataset.
+
+### Integration tests
+
+Integration tests are intentionally small and opt-in.
+
+They verify:
+
+- a real Ollama call returns output that passes the contract,
+- key signals from the input survive somewhere in the output.
+
+They do not test exact wording.
+
+## Run checks
+
+Run the deterministic suite:
+
+```bash
+pytest
+ruff check .
+ruff format --check .
+```
+
+Run only integration smoke tests:
+
+```bash
+RUN_OLLAMA_INTEGRATION=1 pytest -m integration
+```
+
+Run everything:
+
+```bash
+RUN_OLLAMA_INTEGRATION=1 pytest
+ruff check .
+ruff format --check .
+```
+
+## Portfolio framing
+
+This project is designed to communicate:
+
+- practical LLM integration instead of trend-chasing,
+- contract-oriented thinking,
+- clear system boundaries,
+- honest handling of nondeterministic behavior,
+- strong testing discipline around an AI-assisted workflow.

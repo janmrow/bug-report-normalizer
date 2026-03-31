@@ -1,0 +1,89 @@
+[
+  {
+    "name": "checkout_spinner_mobile",
+    "raw_note": "Checkout seems broken. After clicking Pay now, the spinner never ends. Seen on Safari on iPhone. I do not know if it happens for all cards.",
+    "llm_response": {
+      "title": "Checkout spinner never finishes",
+      "summary": "After clicking Pay now, checkout does not complete and the spinner stays visible.",
+      "observed_behavior": "The user remains on the checkout page with a persistent spinner.",
+      "steps_to_reproduce": [
+        "Open checkout page",
+        "Enter valid payment data",
+        "Click Pay now"
+      ],
+      "environment": {
+        "environment_name": null,
+        "browser": "Safari",
+        "operating_system": null,
+        "device": "iPhone"
+      },
+      "missing_information": [
+        "Whether the issue happens for all cards"
+      ]
+    },
+    "expected": {
+      "title": "Checkout spinner never finishes",
+      "browser": "Safari",
+      "device": "iPhone",
+      "missing_information_contains": "Whether the issue happens for all cards"
+    }
+  },
+  {
+    "name": "profile_blank_after_login",
+    "raw_note": "Profile page is blank after login on Firefox on Ubuntu. Reproduced twice. No error shown.",
+    "llm_response": {
+      "title": "Profile page is blank after login",
+      "summary": "Opening the profile page after login results in a blank view with no visible error.",
+      "observed_behavior": "The profile page shows no content.",
+      "steps_to_reproduce": [
+        "Log in",
+        "Open the profile page"
+      ],
+      "environment": {
+        "environment_name": null,
+        "browser": "Firefox",
+        "operating_system": "Ubuntu",
+        "device": "desktop"
+      },
+      "missing_information": [
+        "Affected user role",
+        "Whether the issue is reproducible for all accounts"
+      ]
+    },
+    "expected": {
+      "title": "Profile page is blank after login",
+      "browser": "Firefox",
+      "operating_system": "Ubuntu",
+      "missing_information_contains": "Affected user role"
+    }
+  },
+  {
+    "name": "search_empty_results",
+    "raw_note": "Search page looks broken. Searching for a product that definitely exists returns empty results on Chrome.",
+    "llm_response": {
+      "title": "Search returns empty results for known products",
+      "summary": "A search for a known existing product shows an empty state.",
+      "observed_behavior": "The results list stays empty after a valid search.",
+      "steps_to_reproduce": [
+        "Open the search page",
+        "Enter a known product name",
+        "Submit the search"
+      ],
+      "environment": {
+        "environment_name": null,
+        "browser": "Chrome",
+        "operating_system": null,
+        "device": null
+      },
+      "missing_information": [
+        "Affected environment",
+        "Whether filters were active"
+      ]
+    },
+    "expected": {
+      "title": "Search returns empty results for known products",
+      "browser": "Chrome",
+      "missing_information_contains": "Affected environment"
+    }
+  }
+]
